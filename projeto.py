@@ -9,8 +9,6 @@ import datetime
 from PIL import Image, ImageTk
     
 
-#########comit
-
 def registar():
     global ecra_registar 
     
@@ -342,12 +340,6 @@ def voltar2():
 
 
 
-
-
-
-
-
-
 def ntarefas():
     ecra_tarefas.withdraw()
     
@@ -372,24 +364,23 @@ def ntarefas():
     
     #--------------Comentário-------------
     lbl_comentário = Label(ecra_ntarefas, text="Comentário:", font=("Helvetica",10))
-    lbl_comentário.place(x=20, y=100)
-    text_comentário = Entry(ecra_ntarefas, width=30, height=3, relief="sunken", bd=2, variable=newtask_comment)
-    text_comentário.place(x=220, y=200)
-    
-    #------------Catergoria------------
+    lbl_comentário.place(x=20, y=140)
+    text_comentário = Entry(ecra_ntarefas, textvariable=newtask_comment)
+    text_comentário.place(x=120, y=125)
+    #------------Combobox Categorias------------
     lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
 
     lbl_categoria = Label(ecra_ntarefas, text="Categoria :", font=("Helvetica",10))
     lbl_categoria.place(x=20, y=220)
-    cb_categoria = Combobox(ecra_ntarefas, state="readonly", values=lista_categorias, textvariable=newtask_categoria)
+    cb_categoria = Combobox(ecra_ntarefas, values=lista_categorias, textvariable=newtask_categoria)
     cb_categoria.place(x=120, y=220)
-
-    #------------Estados------------
+    
+    #------------Combobox estados------------
     lista_estados = ["Não realizado", "Em desenvolvimento", "Finalizado"]
 
-    lbl_estado= Label(ecra_ntarefas, text="Estado inicial:", font=("Helvetica",10))
+    lbl_estado= Label(ecra_ntarefas, text="Estado:", font=("Helvetica",10))
     lbl_estado.place(x=20, y=260)
-    cb_estado = Combobox(ecra_ntarefas, state="readonly", values=lista_estados, textvariable=newtask_estados)
+    cb_estado = Combobox(ecra_ntarefas, values=lista_estados, textvariable=newtask_estados)
     cb_estado.place(x=120, y=260)
 
     #-----------adicionar imagem------
@@ -398,14 +389,21 @@ def ntarefas():
     canvas_imagem = Canvas(ecra_ntarefas, width = 350, height = 200, bd = 4, relief = "sunken")
     canvas_imagem.place(x=40, y=350)
     btn_selcimg = Button(ecra_ntarefas, text="Selecionar imagem", relief="raised", width=20, height=2, bd=3)
-    btn_selcimg.place(x=550, y=350)
-
+    btn_selcimg.place(x=530, y=350)
+    #Atribuir tarefa-----
+    lbl_atribuir= Label(ecra_ntarefas, text=" Atribuir tarefa:", font=("Helvetica",15))
+    lbl_atribuir.place(x=500, y=20)
+    lbl_utilizador= Label(ecra_ntarefas, text=" Utilizador:", font=("Helvetica",10))
+    lbl_utilizador.place(x=470, y=60)
+    text_utilizador = Entry(ecra_ntarefas, text="")
+    text_utilizador.place(x=570, y=60)
     #------Botão adicionar tarefa----------
-    btn_novatarefa = Button(ecra_ntarefas, text="Adicionar tarefa", relief="raised", width=20, height=2, bd=3)
-    btn_novatarefa.place(x=550, y=400)
-
-    btn = Button(ecra_ntarefas, text="Voltar", background="skyblue1", command = voltar)
-    btn.place(x=600, y=450)
+    btn_edtarefa = Button(ecra_ntarefas, text="Editar tarefa", relief="raised", width=20, height=2, bd=3)
+    btn_edtarefa.place(x=530, y=400)
+    btn_associar = Button(ecra_ntarefas, text="Atribuir tarefa", relief="raised", width=20, height=2, bd=3)
+    btn_associar.place(x=530, y=450)
+    btn = Button(ecra_ntarefas, text="Voltar", background="skyblue1", command = voltar1)
+    btn.place(x=600, y=500)
 
 
 
@@ -424,11 +422,14 @@ def voltar():
     ecra_ntarefas.destroy()
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
-    
+
+
+
 def etarefas():
     ecra_tarefas.withdraw()  
 
     global ecra_etarefas
+    
     ecra_etarefas=Tk()
     ecra_etarefas.title("Editar Tarefas")
     ecra_etarefas.geometry("800x600")
@@ -486,6 +487,9 @@ def etarefas():
     btn_associar.place(x=530, y=450)
     btn = Button(ecra_etarefas, text="Voltar", background="skyblue1", command = voltar1)
     btn.place(x=600, y=500)
+
+
+
 
 def voltar1():
     ecra_etarefas.destroy()
