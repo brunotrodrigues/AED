@@ -8,6 +8,9 @@ import re
 import datetime
 from PIL import Image, ImageTk
     
+
+#########comit
+
 def registar():
     global ecra_registar 
     
