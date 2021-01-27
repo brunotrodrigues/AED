@@ -335,11 +335,6 @@ def voltar2():
 
 
 
-
-
-
-
-
 def ntarefas():
     ecra_tarefas.withdraw()
     
@@ -402,28 +397,13 @@ def ntarefas():
     btn_edtarefa.place(x=530, y=400)
     btn_associar = Button(ecra_ntarefas, text="Atribuir tarefa", relief="raised", width=20, height=2, bd=3)
     btn_associar.place(x=530, y=450)
-    btn = Button(ecra_ntarefas, text="Voltar", background="skyblue1", command = voltar1)
+    btn = Button(ecra_ntarefas, text="Voltar", background="skyblue1", command = voltar)
     btn.place(x=600, y=500)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def voltar():
     ecra_ntarefas.destroy()
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
-
-
 
 def etarefas():
     ecra_tarefas.withdraw()  
