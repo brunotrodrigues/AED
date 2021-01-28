@@ -133,13 +133,19 @@ def login_ver():
     file = open("ficheiros/utilizadores.txt", "r")
     lista_files = file.read()
     file.close()
-    if user1 in lista_files:
+    if user1=="" and pass1=="":
+        login_errado()
+    elif user1 in lista_files:
         if pass1 in lista_files:
             login_sucess()
         else:
             password_errada()    
     else:
         user_errado()
+
+def login_errado():
+    messagebox.showinfo("Login", "Login realizado sem sucesso")
+    ecra_login.destroy()
 
 def login_sucess():
     messagebox.showinfo("Login", "Login realizado com sucesso")
@@ -400,7 +406,7 @@ def ntarefas():
     text_utilizador = Entry(ecra_ntarefas, text="")
     text_utilizador.place(x=570, y=60)
     #------Botão adicionar tarefa----------
-    btn_edtarefa = Button(ecra_ntarefas, text="Editar tarefa", relief="raised", width=20, height=2, bd=3, command=add_task)
+    btn_edtarefa = Button(ecra_ntarefas, text="Nova tarefa", relief="raised", width=20, height=2, bd=3, command=add_task)
     btn_edtarefa.place(x=530, y=400)
     btn_associar = Button(ecra_ntarefas, text="Atribuir tarefa", relief="raised", width=20, height=2, bd=3)
     btn_associar.place(x=530, y=450)
@@ -471,13 +477,15 @@ def etarefas():
     text_comentário = Text(ecra_etarefas, width=30, height=3, relief="sunken", bd=2)
     text_comentário.place(x=120, y=125)
     #------------Combobox------------
+    lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
     lbl_categoria = Label(ecra_etarefas, text="Categoria :", font=("Helvetica",10))
     lbl_categoria.place(x=20, y=220)
-    cb_categoria = Combobox(ecra_etarefas, text="Categorias")
+    cb_categoria = Combobox(ecra_etarefas, text="Categorias", values=lista_categorias)
     cb_categoria.place(x=120, y=220)
+    lista_estados = ["Não realizado", "Em desenvolvimento", "Finalizado"]
     lbl_estado= Label(ecra_etarefas, text="Estado:", font=("Helvetica",10))
     lbl_estado.place(x=20, y=260)
-    cb_estado = Combobox(ecra_etarefas, text="Estado inicial")
+    cb_estado = Combobox(ecra_etarefas, text="Estado inicial", values=lista_estados)
     cb_estado.place(x=120, y=260)
     #----Adicionar nova tarefa-------
     newcategory= StringVar()
@@ -524,13 +532,14 @@ def removtaf():
     ecra_remover.geometry("800x600")
 
     #Categoria da tarefa
+    lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
     lbl_categoria = Label(ecra_remover, text="Categoria:", font=("Helvetica", 10))
     lbl_categoria.place(x=20, y=20)
-    cb_categoria = Combobox(ecra_remover, text="Categorias")
+    cb_categoria = Combobox(ecra_remover, text="Categorias", values=lista_categorias)
     cb_categoria.place(x=120, y=20)
 
     #listbox com as tarefas dessa categia
-    Frame1 = LabelFrame(ecra_remover, width = 300, height=340, bd="3", relief= "sunken")
+    Frame1 = LabelFrame(ecra_remover, text="Tarefas", width = 300, height=340, bd="3", relief= "sunken")
     Frame1.place(x= 290, y=80)
     texto = StringVar()#variavel que se vai associar ao componente text
     lbox_tarefas=Listbox(Frame1, width = 43, height = 20, relief = "sunken", bd = 3)
@@ -548,7 +557,7 @@ def voltar5():
 
 def produt():
     ecra_tarefas.withdraw()
-    global ecra_produtividade, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei
+    global ecra_produtividade, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei, panel1, panel2, panel3, panel4
     ecra_produtividade=Tk()
     ecra_produtividade.title("Produtividade")
     ecra_produtividade.geometry("800x600")
@@ -562,16 +571,16 @@ def produt():
     num_criadas= Entry(ecra_produtividade, text="", width=5, font = ("Helvetica", 12))
     num_criadas.place(x=130, y=55)
 
-    btn_estado= Button(ecra_produtividade, text="Nº tarefas por estado", width=18,height=3, font=("Helvetica", "10"))
+    btn_estado= Button(ecra_produtividade, text="Nº tarefas por estado", width=18,height=3, font=("Helvetica", "10"), command= tarefas_num_estados)
     btn_estado.place(x=20, y=120)
 
-    btn_categoria= Button(ecra_produtividade, text="Nº tarefas por categoria", width=18,height=3, font=("Helvetica", "10"))
+    btn_categoria= Button(ecra_produtividade, text="Nº tarefas por categoria", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_categorias)
     btn_categoria.place(x=20, y=190)
 
-    btn_semana= Button(ecra_produtividade, text="Nº tarefas por semana", width=18,height=3, font=("Helvetica", "10"))
+    btn_semana= Button(ecra_produtividade, text="Nº tarefas por semana", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_semana)
     btn_semana.place(x=20, y=260)
 
-    btn_mes= Button(ecra_produtividade, text="Nº tarefas por mês", width=18,height=3, font=("Helvetica", "10"))
+    btn_mes= Button(ecra_produtividade, text="Nº tarefas por mês", width=18,height=3, font=("Helvetica", "10"), command= tarefas_num_mes)
     btn_mes.place(x=20, y=330)
 
     #Panel para o nº por estados 
@@ -632,6 +641,30 @@ def produt():
 
     btn = Button( ecra_produtividade, text="Voltar", background="skyblue1", command = voltar4)
     btn.place(x=700, y=500)
+
+def tarefas_num_estados():
+    panel2.place_forget()
+    panel3.place_forget()
+    panel4.place_forget()
+    panel1.place(x=220, y=40)
+
+def tarefas_num_categorias():
+    panel1.place_forget()
+    panel3.place_forget()
+    panel4.place_forget()
+    panel2.place(x=220, y=40)
+
+def tarefas_num_semana():
+    panel1.place_forget()
+    panel2.place_forget()
+    panel4.place_forget()
+    panel3.place(x=220, y=40)
+
+def tarefas_num_mes():
+    panel1.place_forget()
+    panel2.place_forget()
+    panel3.place_forget()
+    panel4.place(x=220, y=40)
 
 def voltar4():
     ecra_produtividade.destroy()
