@@ -338,30 +338,37 @@ def voltar2():
 def ntarefas():
     ecra_tarefas.withdraw()
     
-    global ecra_ntarefas, newtask_name, newtask_comment, newtask_categoria, newtask_estados
+    global ecra_ntarefas, newtask_name, newtask_comment, newtask_categoria, newtask_estados, newtask_data
 
     newtask_name = StringVar()
     newtask_comment = StringVar()
     newtask_categoria = StringVar()
     newtask_estados = StringVar()
+    newtask_data = StringVar()
 
     ecra_ntarefas=Tk()
     ecra_ntarefas.title("Nova Tarefas")
     ecra_ntarefas.geometry("800x600")
 
     #escrever nova tarefa
+
+    #--------------Data da tarefa-----------
+    lbl_ndata = Label(ecra_ntarefas, text="Data :", font=("Helvetica", 10))
+    lbl_ndata.place(x=20, y=20)
+    text_ndata = Entry(ecra_ntarefas, textvariable=newtask_data)
+    text_ndata.place(x=120, y=20)
     
     #-----------------Nova Tarefa---------------
-    lbl_novatarefa = Label(ecra_ntarefas, text="Tarefa Nova:", font=("Helvetica", 10))
-    lbl_novatarefa.place(x=20, y=20)
+    lbl_novatarefa = Label(ecra_ntarefas, text="Tarefa :", font=("Helvetica", 10))
+    lbl_novatarefa.place(x=20, y=60)
     novatarefa_entry = Entry(ecra_ntarefas, textvariable=newtask_name)
-    novatarefa_entry.place(x=120, y=20)
+    novatarefa_entry.place(x=120, y=60)
     
     #--------------Comentário-------------
     lbl_comentário = Label(ecra_ntarefas, text="Comentário:", font=("Helvetica",10))
     lbl_comentário.place(x=20, y=140)
     text_comentário = Entry(ecra_ntarefas, textvariable=newtask_comment)
-    text_comentário.place(x=120, y=125)
+    text_comentário.place(x=120, y=140)
     #------------Combobox Categorias------------
     lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
 
@@ -383,7 +390,7 @@ def ntarefas():
     imagem_lbl.place(x=60, y=320)
     canvas_imagem = Canvas(ecra_ntarefas, width = 350, height = 200, bd = 4, relief = "sunken")
     canvas_imagem.place(x=40, y=350)
-    btn_selcimg = Button(ecra_ntarefas, text="Selecionar imagem", relief="raised", width=20, height=2, bd=3)
+    btn_selcimg = Button(ecra_ntarefas, text="Selecionar imagem", relief="raised", width=20, height=2, bd=3, command=add_img)
     btn_selcimg.place(x=530, y=350)
     #Atribuir tarefa-----
     lbl_atribuir= Label(ecra_ntarefas, text=" Atribuir tarefa:", font=("Helvetica",15))
@@ -393,12 +400,45 @@ def ntarefas():
     text_utilizador = Entry(ecra_ntarefas, text="")
     text_utilizador.place(x=570, y=60)
     #------Botão adicionar tarefa----------
-    btn_edtarefa = Button(ecra_ntarefas, text="Editar tarefa", relief="raised", width=20, height=2, bd=3)
+    btn_edtarefa = Button(ecra_ntarefas, text="Editar tarefa", relief="raised", width=20, height=2, bd=3, command=add_task)
     btn_edtarefa.place(x=530, y=400)
     btn_associar = Button(ecra_ntarefas, text="Atribuir tarefa", relief="raised", width=20, height=2, bd=3)
     btn_associar.place(x=530, y=450)
     btn = Button(ecra_ntarefas, text="Voltar", background="skyblue1", command = voltar)
     btn.place(x=600, y=500)
+
+def add_task():
+    tarefa = newtask_name.get()
+    comentario = newtask_comment.get()
+    data = newtask_data.get()
+    categoria = newtask_categoria.get()
+    estado = newtask_estados.get()
+
+    file1 = open("tarefas.txt", "a")
+    file1.write(tarefa + ";")
+    file1.write(comentario + ";")
+    file1.write(data + ";")
+    file1.write(categoria + ";")
+    file1.write(estado + ";" + "\n")
+
+    file1.close()
+
+
+def add_img():
+    filename = filedialog.askopenfilename(title = "Select file", filetypes= (("jpeg files", "*.jpg"), ("png files", "*.png"), ("all files", "*.*")))
+
+    img = ImageTk.PhotoImage(file=filename)
+    img_id=canvas_imagem(0,0, anchor="nw", imag = img)
+
+
+
+
+
+
+
+
+
+
 
 def voltar():
     ecra_ntarefas.destroy()
