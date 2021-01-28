@@ -335,11 +335,6 @@ def voltar2():
 
 
 
-
-
-
-
-
 def ntarefas():
     ecra_tarefas.withdraw()
     
@@ -449,8 +444,6 @@ def voltar():
     ecra_ntarefas.destroy()
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
-
-
 
 def etarefas():
     ecra_tarefas.withdraw()  
