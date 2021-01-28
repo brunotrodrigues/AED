@@ -674,37 +674,48 @@ def voltar4():
 
 def edit_conta():
     ecra_tarefas.withdraw()
-    global ecra_editconta, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei
+    global ecra_editconta, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei, user, mail, perf
+  
     ecra_editconta=Tk()
     ecra_editconta.title("Editar Conta")
     ecra_editconta.geometry("600x400")
     ecra_editconta.resizable(1,0)
 
+    user = StringVar()
+    mail = StringVar()
+    perf = StringVar()
+
     canvas_perfil = Canvas(ecra_editconta, width=110, height=120, bd=2, relief = "sunken")
     canvas_perfil.place(x=20, y=20)
+
     btn3 = Button(ecra_editconta, text="Selecione imagem", width=14, font=("Helvetica", "10"))
     btn3.place(x=20, y=160)
-
-
-    nome_username_lb = Label(ecra_editconta, text="Username: ")
+    nome_username_lb = Label(ecra_editconta, text="Username: ", font = ("Helvetica", "10"), textvariable= user)
     nome_username_lb.place(x=180, y=40)
-    nome_username = Entry(ecra_editconta, text="", state = "disabled", font = ("Helvetica", "12"))
-    nome_username.place(x=300, y=40)
+    nome_username = Entry(ecra_editconta)
+    nome_username.place(x=310, y=40)
 
-    email_lb= Label(ecra_editconta, text="E-mail: ")
+    email_lb= Label(ecra_editconta, text="E-mail: ", font = ("Helvetica", "10"), textvariable= mail)
     email_lb.place(x=180, y=80)
-    email = Entry(ecra_editconta, text="", state = "disabled", font = ("Helvetica", "12"))
-    email.place(x=300, y=80)
+    email = Entry(ecra_editconta)
+    email.place(x=310, y=80)
 
-    perfil_lb= Label(ecra_editconta, text="Perfil de Utilizador: ")
+    perfil_lb= Label(ecra_editconta, text="Perfil de Utilizador: ", font = ("Helvetica", "10"))
     perfil_lb.place(x=180, y=120)
-    perfil_txt = Entry(ecra_editconta, text="Utilizador", state = "disabled", font = ("Helvetica", "12"))
-    perfil_txt.place(x=300, y=120)
+    perfil_txt = Label(ecra_editconta, text="User", textvariable= perf)
+    perfil_txt.place(x=310, y=120)
 
-    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3)
+    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3, command= guardar)
     btn_guardar.place(x=400, y=270)
     btn_voltar = Button(ecra_editconta, text="Voltar", background="skyblue1", command = voltar3)
     btn_voltar.place(x=505, y=350)
+
+def guardar():
+    f = open("ficheiros/utilizadores.txt", "a")
+    f.write(user.get() + ";")
+    f.write(mail.get() + ";")
+    f.write(perf.get() + ";" + "\n")
+    f.close()
 
 def voltar3():
     ecra_editconta.destroy()
