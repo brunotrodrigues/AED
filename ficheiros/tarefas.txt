@@ -2,3 +2,4 @@
 ;;;Testes;Finalizado
 tarefa1;tarefa por fazer;1-1-2021;Projetos;Em desenvolvimento
 tarefa2;tarefa2;29-01-2021;Profissionais;Em desenvolvimento
+a;a;a;Pessoais;Em desenvolvimento;goncalo

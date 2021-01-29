@@ -353,14 +353,15 @@ def voltar2():
 def ntarefas():
     ecra_tarefas.withdraw()
     
-    global ecra_ntarefas, newtask_name, newtask_comment, newtask_categoria, newtask_estados, newtask_data
-    global text_ndata, novatarefa_entry, text_comentario, cb_categoria, cb_estado
+    global ecra_ntarefas, newtask_name, newtask_comment, newtask_categoria, newtask_estados, newtask_data, newtask_user
+    global text_ndata, novatarefa_entry, text_comentario, cb_categoria, cb_estado, text_utilizador
     
     newtask_name = StringVar()
     newtask_comment = StringVar()
     newtask_categoria = StringVar()
     newtask_estados = StringVar()
     newtask_data = StringVar()
+    newtask_user = StringVar()
 
     ecra_ntarefas=Tk()
     ecra_ntarefas.title("Nova Tarefas")
@@ -413,7 +414,7 @@ def ntarefas():
     lbl_atribuir.place(x=500, y=20)
     lbl_utilizador= Label(ecra_ntarefas, text=" Utilizador:", font=("Helvetica",10))
     lbl_utilizador.place(x=470, y=60)
-    text_utilizador = Entry(ecra_ntarefas, text="")
+    text_utilizador = Entry(ecra_ntarefas, text="", textvariable=newtask_user)
     text_utilizador.place(x=570, y=60)
     #------Botão adicionar tarefa----------
     btn_edtarefa = Button(ecra_ntarefas, text="Nova tarefa", relief="raised", width=20, height=2, bd=3, command=add_task)
@@ -430,6 +431,7 @@ def add_task():
     date = text_ndata.get()
     categ = cb_categoria.get()
     estad = cb_estado.get()
+    utilizador = text_utilizador.get()
 
     file1 = open("ficheiros\\tarefas.txt", "a", encoding="utf-8")
     if (taref == "" or taref == " "):
@@ -442,17 +444,26 @@ def add_task():
         messagebox.showinfo("Registo de tarefas", "Selecione uma categoria, tente novamente")
     elif (estad == "" or estad == " "):
         messagebox.showinfo("Registo de tarefas", "Selecione um estado, tente novamente")
-    else:                        
-        linha = taref + ";" + comentar + ";" + date + ";" + categ + ";" +estad + "\n"
-        file1.write(linha)
-        file1.close()
-        messagebox.showinfo("Registo de tarefas", "Tarefa registada")
+    else:    
+        f = open("ficheiros/utilizadores.txt", "r", encoding="utf-8")
+        lista = f.readlines()
+        for i in lista:
+            campos = i.split(";")
+            u = campos[0]
+            if (utilizador == u):
+                messagebox.showinfo("Registo de tarefas", "Não pode atribuir esta tarefa a este utilizador pois não existe")
+            else:                
+                linha = taref + ";" + comentar + ";" + date + ";" + categ + ";" +estad + ";" + utilizador +"\n"
+                file1.write(linha)
+                file1.close()
+                messagebox.showinfo("Registo de tarefas", "Tarefa registada")
         
         cb_estado.delete(0, END)
         cb_categoria.delete(0, END)
         text_comentario.delete(0, END)
         novatarefa_entry.delete(0, END)
         text_ndata.delete(0, END)
+        lbl_utilizador.delete(0, END)
 
 
 

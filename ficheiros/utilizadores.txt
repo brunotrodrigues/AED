@@ -1,2 +1,2 @@
 bruno;bruno;bruno;Admin;
-goncalo;goncalo@gaoncalo.com;123;User;
+goncalo;goncalo@gaoncalo.com;123;User;a;a@example.com;a;User;
