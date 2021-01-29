@@ -437,15 +437,6 @@ def add_img():
     img_id=canvas_imagem(0,0, anchor="nw", imag = img)
 
 
-
-
-
-
-
-
-
-
-
 def voltar():
     ecra_ntarefas.destroy()
     ecra_tarefas.update()
@@ -709,7 +700,7 @@ def voltar4():
 def edit_conta():
     ecra_tarefas.withdraw()
     global ecra_editconta, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei, user, mail, perf
-  
+    global canvas_perfil, nome_username, perfil_txt
     ecra_editconta=Tk()
     ecra_editconta.title("Editar Conta")
     ecra_editconta.geometry("600x400")
@@ -718,20 +709,18 @@ def edit_conta():
     user = StringVar()
     mail = StringVar()
     perf = StringVar()
-
-    canvas_perfil = Canvas(ecra_editconta, width=110, height=120, bd=2, relief = "sunken")
+    canvas_perfil = Canvas(ecra_editconta, width=110, height=120, bd=2, relief="sunken")
     canvas_perfil.place(x=20, y=20)
-
-    btn3 = Button(ecra_editconta, text="Selecione imagem", width=14, font=("Helvetica", "10"))
+    btn3 = Button(ecra_editconta, text="Selecione imagem", width=14, font=("Helvetica", "10"), command= selec_perfil)
     btn3.place(x=20, y=160)
-    nome_username_lb = Label(ecra_editconta, text="Username: ", font = ("Helvetica", "10"), textvariable= user)
+    nome_username_lb = Label(ecra_editconta, text="Username: ", font = ("Helvetica", "10"))
     nome_username_lb.place(x=180, y=40)
-    nome_username = Entry(ecra_editconta)
+    nome_username = Entry(ecra_editconta, textvariable = user)
     nome_username.place(x=310, y=40)
 
-    email_lb= Label(ecra_editconta, text="E-mail: ", font = ("Helvetica", "10"), textvariable= mail)
+    email_lb= Label(ecra_editconta, text="E-mail: ", font = ("Helvetica", "10"))
     email_lb.place(x=180, y=80)
-    email = Entry(ecra_editconta)
+    email = Entry(ecra_editconta, textvariable = mail)
     email.place(x=310, y=80)
 
     perfil_lb= Label(ecra_editconta, text="Perfil de Utilizador: ", font = ("Helvetica", "10"))
@@ -739,10 +728,24 @@ def edit_conta():
     perfil_txt = Label(ecra_editconta, text="User", textvariable= perf)
     perfil_txt.place(x=310, y=120)
 
-    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3)
+    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3, command= guardar)
     btn_guardar.place(x=400, y=270)
     btn_voltar = Button(ecra_editconta, text="Voltar", background="skyblue1", command = voltar3)
     btn_voltar.place(x=505, y=350)
+
+def selec_perfil():
+    fic = filedialog.askopenfilename(title="Selecionar perfil", filetypes=(("all files","*.*"),("jpeg files",".jpg"),("png files",".png")))
+    img_perfil = ImageTk.PhotoImage(file = fic)
+    canvas_perfil.create_image(0,0,image=img_perfil)
+
+def guardar():
+    ficher= open("ficheiros\\utilizadores.txt","a",enconding="utf-8")
+    user1=nome_username.get()
+    mail1=email.get()
+    perfil1=perfil_txt.get()
+    linha_adicionar = user1 + ";" + mail1 + ";" + perfil1 + "\n"
+    ficher.write(linha_adicionar)
+    ficher.close()
 
 def voltar3():
     ecra_editconta.destroy()
