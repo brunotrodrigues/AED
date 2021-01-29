@@ -12,8 +12,6 @@ from PIL import Image, ImageTk
 def registar():
     global ecra_registar 
     
-    #registar mesmo utilizador tem que dar erro
-    
     ecra_registar = Toplevel(window)
     ecra_registar.title("Registar")
     ecra_registar.geometry("600x600")
@@ -47,7 +45,6 @@ def registar():
     perfil_reg_label = Label(ecra_registar, text="Perfil de utilziador:")
     perfil_reg_label.place(x=50, y= 200)
     lista_perfil=["User"]
-        #adicionar a está lista o "admin" na pagina gerir (Admin = username:admin || password:admin)
     perfil_reg = Combobox(ecra_registar, state="readonly", values=lista_perfil, textvariable=perfil)
     perfil_reg.place(x=160, y=200)
     
@@ -150,19 +147,7 @@ def login_errado():
 def login_sucess():
     messagebox.showinfo("Login", "Login realizado com sucesso")
     ecra_login.destroy()
-
-#for line in file 
-#   s = line.split(';')
-#   array.append(s)  
-#for user in array
-#   if user[0] == username
-#           if user[3] == perfil
-#                true
-
-    #perfil = user 
     tarefas_screen()
-    #senão
-        #gerir
 
 def password_errada():
     messagebox.showinfo("Login", "Password errada")
@@ -340,15 +325,10 @@ def consul_tarefas():
         lbl_tarefas.insert("end", linha)
     f.close()
 
-
-
-
 def voltar2():
     ecra_consul.destroy()
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
-
-
 
 def ntarefas():
     ecra_tarefas.withdraw()
@@ -463,16 +443,13 @@ def add_task():
         text_comentario.delete(0, END)
         novatarefa_entry.delete(0, END)
         text_ndata.delete(0, END)
-        lbl_utilizador.delete(0, END)
-
-
+        text_utilizador.delete(0, END)
 
 def add_img():
     filename = filedialog.askopenfilename(title = "Select file", filetypes= (("jpeg files", "*.jpg"), ("png files", "*.png"), ("all files", "*.*")))
 
     img = ImageTk.PhotoImage(file=filename)
     img_id=canvas_imagem(0,0, anchor="nw", imag = img)
-
 
 def voltar():
     ecra_ntarefas.destroy()
@@ -544,9 +521,6 @@ def etarefas():
     btn = Button(ecra_etarefas, text="Voltar", background="skyblue1", command = voltar1)
     btn.place(x=600, y=500)
 
-
-
-
 def voltar1():
     ecra_etarefas.destroy()
     ecra_tarefas.update()
@@ -580,13 +554,6 @@ def removtaf():
     ecra_remover.title("Remover Tarefa")
     ecra_remover.geometry("800x600")
 
-    #Categoria da tarefa
-    lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
-    lbl_categoria = Label(ecra_remover, text="Categoria:", font=("Helvetica", 10))
-    lbl_categoria.place(x=20, y=20)
-    cb_categoria = Combobox(ecra_remover, text="Categorias", values=lista_categorias)
-    cb_categoria.place(x=120, y=20)
-
     #listbox com as tarefas dessa categia
     Frame1 = LabelFrame(ecra_remover, text="Tarefas", width = 300, height=340, bd="3", relief= "sunken")
     Frame1.place(x= 290, y=80)
@@ -605,13 +572,6 @@ def removtaf():
     for linha in lista:
         lbox_tarefas.insert("end", linha)
     f.close()
-
-
-
-
-
-
-
 
 def voltar5():
     ecra_remover.destroy()
@@ -634,7 +594,6 @@ def produt():
     btn_semana= Button(ecra_produtividade, text="Nº tarefas criadas", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_criadas)
     btn_semana.place(x=20, y=260)
 
-
     #Panel para o nº por estados 
     panel1 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
     panel1.place(x= 220, y=40)
@@ -649,15 +608,12 @@ def produt():
     num_categorias= Label(panel2, text="Nº de tarefas por categoria", font=("Helvetica", "15"))
     num_categorias.place(x=150, y=40)
 
-
     #panel para nº/criadas
     panel3 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
     panel3.place(x= 220, y=40)
 
     num_semana= Label(panel3, text="Nº de tarefas criadas", font=("Helvetica", "15"))
     num_semana.place(x=150, y=40)
-
-
 
     btn = Button( ecra_produtividade, text="Voltar", background="skyblue1", command = voltar4)
     btn.place(x=700, y=500)
@@ -740,7 +696,6 @@ def tarefas_num_categorias():
             aul +=1
             tree2.insert("","end",values=(campos[3],aul))
 
-
 def tarefas_num_criadas():
     tar = 0
     panel1.place_forget()
@@ -767,7 +722,6 @@ def voltar4():
     ecra_produtividade.destroy()
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
-
 
 def edit_conta():
     ecra_tarefas.withdraw()
@@ -814,7 +768,7 @@ def guardar():
     ficher= open("ficheiros\\utilizadores.txt","a",enconding="utf-8")
     user1=nome_username.get()
     mail1=email.get()
-    perfil1=perfil_txt.get()
+    perfil1=perf.get()
     linha_adicionar = user1 + ";" + mail1 + ";" + perfil1 + "\n"
     ficher.write(linha_adicionar)
     ficher.close()
@@ -824,10 +778,8 @@ def voltar3():
     ecra_tarefas.update()
     ecra_tarefas.deiconify()
 
-
 def logout():
     ecra_tarefas.destroy()
-
 
 def notifications():
     
@@ -835,6 +787,17 @@ def notifications():
     ecra_popup.title("Notificações")
     ecra_popup.geometry("200x200")
     ecra_popup.resizable(1,0)
+    popup()
 
+def popup():
+    global data
+    data = datetime.now().date()
+    f = open("tarefa.txt", "r")   # abre o ficheiro em modo de Leitura
+    for linha in f:
+        campos = linha.split(";") 
+        if data == campos[2]:
+            messagebox.info("Notificação", "Tem uma tarefa com data limite hoje!")
+        elif data < campos[2]:
+            messagebox.info("Notificação", "Tem uma tarefa a chegar à data limite!")
 
 main_account_screen() 
