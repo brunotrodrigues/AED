@@ -618,7 +618,7 @@ def tarefas_num_estados():
     for lin in linhas:
         campos = lin.split(";")
         esta = campos[4]
-        if esta == "Em Desenvolvimento":
+        if esta == "Em desenvolvimento":
             desen+=1
             tree.insert("","end",values=(campos[4],desen))
         elif esta == "Não realizado":
@@ -739,21 +739,10 @@ def edit_conta():
     perfil_txt = Label(ecra_editconta, text="User", textvariable= perf)
     perfil_txt.place(x=310, y=120)
 
-    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3, command= guardar)
+    btn_guardar = Button(ecra_editconta, text = "Guardar configurações", width = 20, height = 3)
     btn_guardar.place(x=400, y=270)
     btn_voltar = Button(ecra_editconta, text="Voltar", background="skyblue1", command = voltar3)
     btn_voltar.place(x=505, y=350)
-
-def guardar():
-    user_info = user.get()  
-    mail_info = mail.get()
-    perf_info = perf.get()
-    
-    f = open("ficheiros/utilizadores.txt", "a")
-    f.write(user.get() + ";")
-    f.write(mail.get() + ";")
-    f.write(perf.get() + ";" + "\n")
-    f.close()
 
 def voltar3():
     ecra_editconta.destroy()
