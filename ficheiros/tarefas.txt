@@ -1,1 +1,3 @@
-;;;;;
+;;;Profissionais;Não realizado
+;;;Testes;Finalizado
+a;a;a;Investigações;Em desenvolvimento

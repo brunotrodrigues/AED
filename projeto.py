@@ -354,7 +354,8 @@ def ntarefas():
     ecra_tarefas.withdraw()
     
     global ecra_ntarefas, newtask_name, newtask_comment, newtask_categoria, newtask_estados, newtask_data
-
+    global text_ndata, novatarefa_entry, text_comentario, cb_categoria, cb_estado
+    
     newtask_name = StringVar()
     newtask_comment = StringVar()
     newtask_categoria = StringVar()
@@ -380,10 +381,10 @@ def ntarefas():
     novatarefa_entry.place(x=120, y=60)
     
     #--------------Comentário-------------
-    lbl_comentário = Label(ecra_ntarefas, text="Comentário:", font=("Helvetica",10))
-    lbl_comentário.place(x=20, y=140)
-    text_comentário = Entry(ecra_ntarefas, textvariable=newtask_comment)
-    text_comentário.place(x=120, y=140)
+    lbl_comentario = Label(ecra_ntarefas, text="Comentário:", font=("Helvetica",10))
+    lbl_comentario.place(x=20, y=140)
+    text_comentario = Entry(ecra_ntarefas, textvariable=newtask_comment)
+    text_comentario.place(x=120, y=140)
     #------------Combobox Categorias------------
     lista_categorias = ["Pessoais", "Profissionais", "Projetos","Testes", "Investigações", "Reuniões", "Estudos", "Aulas"]
 
@@ -423,18 +424,16 @@ def ntarefas():
     btn.place(x=600, y=500)
 
 def add_task():
-    tarefa = newtask_name.get()
-    comentario = newtask_comment.get()
-    data = newtask_data.get()
-    categoria = newtask_categoria.get()
-    estado = newtask_estados.get()
+    global text_ndata, novatarefa_entry, text_comentario, cb_categoria, cb_estado
+    taref = novatarefa_entry.get()
+    comentar = text_comentario.get()
+    date = text_ndata.get()
+    categ = cb_categoria.get()
+    estad = cb_estado.get()
 
     file1 = open("ficheiros\\tarefas.txt", "a", encoding="utf-8")
-    file1.write(tarefa + ";")
-    file1.write(comentario + ";")
-    file1.write(data + ";")
-    file1.write(categoria + ";")
-    file1.write(estado + ";" + "\n")
+    linha = taref + ";" + comentar + ";" + date + ";" + categ + ";" +estad + "\n"
+    file1.write(linha)
 
     file1.close()
 
@@ -630,14 +629,14 @@ def tarefas_num_estados():
     f.close()
     for lin in linhas:
         campos = lin.split(";")
-        esta = campos[4]
-        if esta == "Em desenvolvimento":
+        est = campos[4]
+        if est == "Em desenvolvimento":
             desen+=1
             tree.insert("","end",values=(campos[4],desen))
-        elif esta == "Não realizado":
+        elif est == "Não realizado":
             rea +=1
             tree.insert("","end",values=(campos[4],rea))
-        elif esta == "Finalizado":
+        elif est == "Finalizado":
             fin +=1
             tree.insert("","end",values=(campos[4],fin))
 
