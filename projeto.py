@@ -86,7 +86,7 @@ def registar_user():
         close_window1()
         login()
     else:
-        messagebox.showinfo("Registo", "Registado sem sucesso, tente novamente")
+        messagebox.showinfo("Registo", "Registo sem sucesso, tente novamente")
         close_window1()
 
 def email_ver(email_info):
@@ -390,7 +390,7 @@ def ntarefas():
 
     lbl_categoria = Label(ecra_ntarefas, text="Categoria :", font=("Helvetica",10))
     lbl_categoria.place(x=20, y=220)
-    cb_categoria = Combobox(ecra_ntarefas, values=lista_categorias, textvariable=newtask_categoria)
+    cb_categoria = Combobox(ecra_ntarefas, state="readonly", values=lista_categorias, textvariable=newtask_categoria)
     cb_categoria.place(x=120, y=220)
     
     #------------Combobox estados------------
@@ -398,7 +398,7 @@ def ntarefas():
 
     lbl_estado= Label(ecra_ntarefas, text="Estado:", font=("Helvetica",10))
     lbl_estado.place(x=20, y=260)
-    cb_estado = Combobox(ecra_ntarefas, values=lista_estados, textvariable=newtask_estados)
+    cb_estado = Combobox(ecra_ntarefas,state="readonly", values=lista_estados, textvariable=newtask_estados)
     cb_estado.place(x=120, y=260)
 
     #-----------adicionar imagem------
@@ -432,10 +432,28 @@ def add_task():
     estad = cb_estado.get()
 
     file1 = open("ficheiros\\tarefas.txt", "a", encoding="utf-8")
-    linha = taref + ";" + comentar + ";" + date + ";" + categ + ";" +estad + "\n"
-    file1.write(linha)
+    if (taref == "" or taref == " "):
+        messagebox.showinfo("Registo de tarefas", "Nome da tarefa invalido, tente novamente")
+    elif (comentar == "" or comentar ==" "):
+        messagebox.showinfo("Registo de tarefas", "Comentario invalido, tente novamente")
+    elif (date == "" or date == " "):
+        messagebox.showinfo("Registo de tarefas", "Data invalida, tente novamente")
+    elif (categ == "" or categ == " "):
+        messagebox.showinfo("Registo de tarefas", "Selecione uma categoria, tente novamente")
+    elif (estad == "" or estad == " "):
+        messagebox.showinfo("Registo de tarefas", "Selecione um estado, tente novamente")
+    else:                        
+        linha = taref + ";" + comentar + ";" + date + ";" + categ + ";" +estad + "\n"
+        file1.write(linha)
+        file1.close()
+        messagebox.showinfo("Registo de tarefas", "Tarefa registada")
+        
+        cb_estado.delete(0, END)
+        cb_categoria.delete(0, END)
+        text_comentario.delete(0, END)
+        novatarefa_entry.delete(0, END)
+        text_ndata.delete(0, END)
 
-    file1.close()
 
 
 def add_img():
