@@ -420,7 +420,7 @@ def add_task():
     categoria = newtask_categoria.get()
     estado = newtask_estados.get()
 
-    file1 = open("tarefas.txt", "a")
+    file1 = open("ficheiros\\tarefas.txt", "a", encoding="utf-8")
     file1.write(tarefa + ";")
     file1.write(comentario + ";")
     file1.write(data + ";")
