@@ -562,26 +562,15 @@ def produt():
     ecra_produtividade.title("Produtividade")
     ecra_produtividade.geometry("800x600")
 
-    concluias_lb= Label(ecra_produtividade, text="Tarefas concluídas: ")
-    concluias_lb.place(x=20, y=20)
-    num_concluidas= Entry(ecra_produtividade, text="", width=5, font = ("Helvetica", 12))
-    num_concluidas.place(x=130, y=20)
-    criadas_lb= Label(ecra_produtividade, text="Tarefas criadas: ")
-    criadas_lb.place(x=20, y=55)
-    num_criadas= Entry(ecra_produtividade, text="", width=5, font = ("Helvetica", 12))
-    num_criadas.place(x=130, y=55)
-
     btn_estado= Button(ecra_produtividade, text="Nº tarefas por estado", width=18,height=3, font=("Helvetica", "10"), command= tarefas_num_estados)
     btn_estado.place(x=20, y=120)
 
     btn_categoria= Button(ecra_produtividade, text="Nº tarefas por categoria", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_categorias)
     btn_categoria.place(x=20, y=190)
 
-    btn_semana= Button(ecra_produtividade, text="Nº tarefas por semana", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_semana)
+    btn_semana= Button(ecra_produtividade, text="Nº tarefas criadas", width=18,height=3, font=("Helvetica", "10"), command=tarefas_num_criadas)
     btn_semana.place(x=20, y=260)
 
-    btn_mes= Button(ecra_produtividade, text="Nº tarefas por mês", width=18,height=3, font=("Helvetica", "10"), command= tarefas_num_mes)
-    btn_mes.place(x=20, y=330)
 
     #Panel para o nº por estados 
     panel1 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
@@ -611,60 +600,101 @@ def produt():
     tree.heading("Nº tarefas", text = "Nº de tarefas")
     tree.place(x=60, y=140)
 
-    #panel para nº/semana
+    #panel para nº/criadas
     panel3 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
     panel3.place(x= 220, y=40)
 
-    num_semana= Label(panel3, text="Nº de tarefas por semana", font=("Helvetica", "15"))
+    num_semana= Label(panel3, text="Nº de tarefas criadas", font=("Helvetica", "15"))
     num_semana.place(x=150, y=40)
 
-    tree = ttk.Treeview(panel3, columns = ("Semana", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
-    tree.column("Semana", width = 200, anchor = "c")
+    tree = ttk.Treeview(panel3, columns = ("Criadas", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
+    tree.column("Criadas", width = 200, anchor = "c")
     tree.column("Nº tarefas", width = 200, anchor = "c")
-    tree.heading("Semana", text = "Semana")
+    tree.heading("Criadas", text = "Criadas")
     tree.heading("Nº tarefas", text = "Nº de tarefas")
     tree.place(x=60, y=140)
 
-    #panel para nº/mês
-    panel4 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
-    panel4.place(x= 220, y=40)
-
-    num_mes= Label(panel4, text="Nº de tarefas por mês", font=("Helvetica", "15"))
-    num_mes.place(x=150, y=40)
-
-    tree = ttk.Treeview(panel4, columns = ("Mês", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
-    tree.column("Mês", width = 200, anchor = "c")
-    tree.column("Nº tarefas", width = 200, anchor = "c")
-    tree.heading("Mês", text = "Mês")
-    tree.heading("Nº tarefas", text = "Nº de tarefas")
-    tree.place(x=60, y=140)
 
     btn = Button( ecra_produtividade, text="Voltar", background="skyblue1", command = voltar4)
     btn.place(x=700, y=500)
 
 def tarefas_num_estados():
+    desen = 0
+    atra = 0
     panel2.place_forget()
     panel3.place_forget()
-    panel4.place_forget()
     panel1.place(x=220, y=40)
+    f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
+    linhas = f.readlines()
+    f.close()
+    for lin in linhas:
+        campos = lin.split(";")
+        esta = campos[4]
+        if esta == "Em Desenvolvimento":
+            desen+=1
+            tree.insert("","end",values=(campos[4],desen))
+        elif esta == "Em atraso":
+            atra +=1
+            tree.insert("","end",values=(campos[4],atra))
 
 def tarefas_num_categorias():
+    pro = 0
+    pes = 0
+    aul = 0
+    est = 0
+    reu = 0
+    inv = 0
+    tes = 0
+    proj = 0
     panel1.place_forget()
     panel3.place_forget()
-    panel4.place_forget()
     panel2.place(x=220, y=40)
+    f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
+    linhas = f.readlines()
+    f.close()
+    for lin in linhas:
+        campos = lin.split(";")
+        cat = campos[3]
+        if cat == "Profissonais":
+            pro+=1
+            tree2.insert("","end",values=(campos[3],pro))
+        elif cat == "Pessoais":
+            pes +=1
+            tree2.insert("","end",values=(campos[3],pes))
+        elif cat == "Projetos":
+            proj +=1
+            tree2.insert("","end",values=(campos[3],proj))
+        elif cat == "Testes":
+            tes +=1
+            tree2.insert("","end",values=(campos[3],tes))
+        elif cat == "Investigações":
+            inv +=1
+            tree2.insert("","end",values=(campos[3],inv))
+        elif cat == "Reuniões":
+            reu +=1
+            tree2.insert("","end",values=(campos[3],reu))
+        elif cat == "Estudos":
+            est +=1
+            tree2.insert("","end",values=(campos[3],est))
+        elif cat == "Aulas":
+            aul +=1
+            tree2.insert("","end",values=(campos[3],aul))
 
-def tarefas_num_semana():
+
+def tarefas_num_criadas():
+    tar = 0
     panel1.place_forget()
     panel2.place_forget()
-    panel4.place_forget()
     panel3.place(x=220, y=40)
+    f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
+    linhas = f.readlines()
+    f.close()
+    for lin in linhas:
+        campos = lin.split(";")
+        tarefas = campos[0]
+        tar+=1
+    tree3.insert("","end",values=("tarefas",tar))
 
-def tarefas_num_mes():
-    panel1.place_forget()
-    panel2.place_forget()
-    panel3.place_forget()
-    panel4.place(x=220, y=40)
 
 def voltar4():
     ecra_produtividade.destroy()
@@ -711,6 +741,10 @@ def edit_conta():
     btn_voltar.place(x=505, y=350)
 
 def guardar():
+    user_info = user.get()  
+    mail_info = mail.get()
+    perf_info = perf.get()
+    
     f = open("ficheiros/utilizadores.txt", "a")
     f.write(user.get() + ";")
     f.write(mail.get() + ";")
