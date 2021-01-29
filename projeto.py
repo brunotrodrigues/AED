@@ -579,13 +579,6 @@ def produt():
     num_estados= Label(panel1, text="Nº de tarefas por estado", font=("Helvetica", "15"))
     num_estados.place(x=150, y=40)
 
-    tree = ttk.Treeview(panel1, columns = ("Estado", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
-    tree.column("Estado", width = 200, anchor = "c")
-    tree.column("Nº tarefas", width = 200, anchor = "c")
-    tree.heading("Estado", text = "Estado")
-    tree.heading("Nº tarefas", text = "Nº de tarefas")
-    tree.place(x=60, y=140)
-
     #panel para nº por categoria
     panel2 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
     panel2.place(x= 220, y=40)
@@ -593,12 +586,6 @@ def produt():
     num_categorias= Label(panel2, text="Nº de tarefas por categoria", font=("Helvetica", "15"))
     num_categorias.place(x=150, y=40)
 
-    tree = ttk.Treeview(panel2, columns = ("Categoria", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
-    tree.column("Categoria", width = 200, anchor = "c")
-    tree.column("Nº tarefas", width = 200, anchor = "c")
-    tree.heading("Categoria", text = "Categoria")
-    tree.heading("Nº tarefas", text = "Nº de tarefas")
-    tree.place(x=60, y=140)
 
     #panel para nº/criadas
     panel3 = PanedWindow(ecra_produtividade, width=540, height=400, bd="3", relief="sunken")
@@ -607,12 +594,6 @@ def produt():
     num_semana= Label(panel3, text="Nº de tarefas criadas", font=("Helvetica", "15"))
     num_semana.place(x=150, y=40)
 
-    tree = ttk.Treeview(panel3, columns = ("Criadas", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
-    tree.column("Criadas", width = 200, anchor = "c")
-    tree.column("Nº tarefas", width = 200, anchor = "c")
-    tree.heading("Criadas", text = "Criadas")
-    tree.heading("Nº tarefas", text = "Nº de tarefas")
-    tree.place(x=60, y=140)
 
 
     btn = Button( ecra_produtividade, text="Voltar", background="skyblue1", command = voltar4)
@@ -620,10 +601,17 @@ def produt():
 
 def tarefas_num_estados():
     desen = 0
-    atra = 0
+    rea = 0
+    fin = 0
     panel2.place_forget()
     panel3.place_forget()
     panel1.place(x=220, y=40)
+    tree = ttk.Treeview(panel1, columns = ("Estado", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
+    tree.column("Estado", width = 200, anchor = "c")
+    tree.column("Nº tarefas", width = 200, anchor = "c")
+    tree.heading("Estado", text = "Estado")
+    tree.heading("Nº tarefas", text = "Nº de tarefas")
+    tree.place(x=60, y=140)
     f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
     linhas = f.readlines()
     f.close()
@@ -633,9 +621,12 @@ def tarefas_num_estados():
         if esta == "Em Desenvolvimento":
             desen+=1
             tree.insert("","end",values=(campos[4],desen))
-        elif esta == "Em atraso":
-            atra +=1
-            tree.insert("","end",values=(campos[4],atra))
+        elif esta == "Não realizado":
+            rea +=1
+            tree.insert("","end",values=(campos[4],rea))
+        elif esta == "Finalizado":
+            fin +=1
+            tree.insert("","end",values=(campos[4],fin))
 
 def tarefas_num_categorias():
     pro = 0
@@ -649,6 +640,12 @@ def tarefas_num_categorias():
     panel1.place_forget()
     panel3.place_forget()
     panel2.place(x=220, y=40)
+    tree2 = ttk.Treeview(panel2, columns = ("Categoria", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
+    tree2.column("Categoria", width = 200, anchor = "c")
+    tree2.column("Nº tarefas", width = 200, anchor = "c")
+    tree2.heading("Categoria", text = "Categoria")
+    tree2.heading("Nº tarefas", text = "Nº de tarefas")
+    tree2.place(x=60, y=140)
     f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
     linhas = f.readlines()
     f.close()
@@ -685,7 +682,14 @@ def tarefas_num_criadas():
     tar = 0
     panel1.place_forget()
     panel2.place_forget()
-    panel3.place(x=220, y=40)
+    panel3.place(x=220, y=40)    
+    tree3 = ttk.Treeview(panel3, columns = ("Criadas", "Nº tarefas"), show = "headings", height = 5, selectmode = "browse")
+    tree3.column("Criadas", width = 200, anchor = "c")
+    tree3.column("Nº tarefas", width = 200, anchor = "c")
+    tree3.heading("Criadas", text = "Criadas")
+    tree3.heading("Nº tarefas", text = "Nº de tarefas")
+    tree3.place(x=60, y=140)
+
     f = open("ficheiros\\tarefas.txt", "r", encoding="utf-8")
     linhas = f.readlines()
     f.close()
