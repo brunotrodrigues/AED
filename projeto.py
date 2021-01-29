@@ -542,6 +542,27 @@ def voltar1():
     ecra_tarefas.deiconify()
 
 def removtaf():
+
+    def remover():
+
+        lbox_tarefas.delete(lbox_tarefas.curselection())
+        texto.set("")
+
+        f = open("ficheiros//tarefas.txt", "w", encoding="utf-8")
+        cont = lbox_tarefas.size()
+        for i in range(cont):
+            atividade = lbox_tarefas.get(i) 
+            if atividade.find("\n") == -1:
+                atividade = atividade + "\n"
+            f.write(atividade)
+        f.close()
+
+    def selecao_item(event):
+        indice = lbox_tarefas.curselection()   # Índice da linha selecionada
+        texto1 = lbox_tarefas.get(indice)       # Obter conteudo da Listbox, linha selecionada 
+        texto.set(texto1)
+
+
     ecra_tarefas.withdraw()
     global ecra_remover, newtask_des, ntdes, newtask_cat, ntcat, categoria, einicial, newtask_ei
     ecra_remover=Tk()
@@ -561,8 +582,9 @@ def removtaf():
     texto = StringVar()#variavel que se vai associar ao componente text
     lbox_tarefas=Listbox(Frame1, width = 47, height = 19, relief = "sunken", bd = 3)
     lbox_tarefas.place(x=1, y=1)
+    lbox_tarefas.bind("<<ListboxSelect>>", selecao_item)
     #remover tarefa
-    btn2=Button(ecra_remover, text="Remover", width = 20, height = 2, bd=3, state="active")
+    btn2=Button(ecra_remover, text="Remover", width = 20, height = 2, bd=3, state="active", command=remover)
     btn2.place(x=40, y=220)
     btn = Button(ecra_remover, text="Voltar", background="skyblue1", command = voltar5)
     btn.place(x=100, y=300)

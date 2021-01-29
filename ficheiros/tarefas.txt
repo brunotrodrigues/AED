@@ -1,5 +1,4 @@
 ;;;Profissionais;Não realizado
 ;;;Testes;Finalizado
-a;a;a;Investigações;Em desenvolvimento
 tarefa1;tarefa por fazer;1-1-2021;Projetos;Em desenvolvimento
 tarefa2;tarefa2;29-01-2021;Profissionais;Em desenvolvimento
