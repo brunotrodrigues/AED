@@ -796,8 +796,8 @@ def popup():
     for linha in f:
         campos = linha.split(";") 
         if data == campos[2]:
-            messagebox.info("Notificação", "Tem uma tarefa com data limite hoje!")
+            messagebox.showinfo("Notificação", "Tem uma tarefa com data limite hoje!")
         elif data < campos[2]:
-            messagebox.info("Notificação", "Tem uma tarefa a chegar à data limite!")
+            messagebox.showinfo("Notificação", "Tem uma tarefa a chegar à data limite!")
 
 main_account_screen() 
