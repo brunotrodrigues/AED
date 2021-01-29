@@ -334,6 +334,15 @@ def consul_tarefas():
     btn = Button( ecra_consul, text="Voltar", background="skyblue1", command = voltar2)
     btn.place(x=60, y=500)
 
+    f = open("ficheiros/tarefas.txt", "r", encoding="utf-8")
+    lista = f.readlines()
+    for linha in lista:
+        lbl_tarefas.insert("end", linha)
+    f.close()
+
+
+
+
 def voltar2():
     ecra_consul.destroy()
     ecra_tarefas.update()
@@ -533,13 +542,26 @@ def removtaf():
     Frame1 = LabelFrame(ecra_remover, text="Tarefas", width = 300, height=340, bd="3", relief= "sunken")
     Frame1.place(x= 290, y=80)
     texto = StringVar()#variavel que se vai associar ao componente text
-    lbox_tarefas=Listbox(Frame1, width = 43, height = 20, relief = "sunken", bd = 3)
-    lbox_tarefas.place(x=5, y=5)
+    lbox_tarefas=Listbox(Frame1, width = 47, height = 19, relief = "sunken", bd = 3)
+    lbox_tarefas.place(x=1, y=1)
     #remover tarefa
     btn2=Button(ecra_remover, text="Remover", width = 20, height = 2, bd=3, state="active")
     btn2.place(x=40, y=220)
     btn = Button(ecra_remover, text="Voltar", background="skyblue1", command = voltar5)
     btn.place(x=100, y=300)
+
+    f = open("ficheiros/tarefas.txt", "r", encoding="utf-8")
+    lista = f.readlines()
+    for linha in lista:
+        lbox_tarefas.insert("end", linha)
+    f.close()
+
+
+
+
+
+
+
 
 def voltar5():
     ecra_remover.destroy()
